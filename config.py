@@ -6,6 +6,8 @@ anchor_file_path = '/Users/yvan/stayby/keras-yolo3-core/model_data/anchors.txt'
 class_file_path = '/Users/yvan/stayby/keras-yolo3-core/model_data/classes.txt'
 # 样本数据文件路径
 label_file_path = '/Users/yvan/stayby/keras-yolo3-core/sample_data/train.txt'
+# 样式路径
+font_path = '/Users/yvan/stayby/keras-yolo3-core/font_data/FiraMono-Medium.otf'
 # 默认输入图像大小
 image_input_shape = (416, 416)
 # anchor使用顺序

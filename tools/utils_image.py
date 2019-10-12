@@ -3,6 +3,7 @@ from PIL import Image
 import numpy as np
 from matplotlib.colors import rgb_to_hsv, hsv_to_rgb
 import config
+import colorsys
 
 
 def augument(image_file_path, cors):
@@ -86,4 +87,26 @@ def augument(image_file_path, cors):
     # 归一的image， 未归一的修正过的cors
     # (416, 416, 3), (20, 5)
     return image_data, cors_data
+
+
+def resize_image(image, new_size):
+    iw, ih = image.size
+    w, h = new_size
+    scale = min(w / iw, h / ih)
+    nw = int(iw * scale)
+    nh = int(ih * scale)
+
+    image = image.resize((nw, nh), Image.BICUBIC)
+    new_image = Image.new('RGB', new_size, (128, 128, 128))
+    new_image.paste(image, ((w - nw) // 2, (h - nh) // 2))
+    return new_image
+
+
+def get_random_colors(nums):
+    hsv_tuples = [(x / nums, 1., 1.)
+                  for x in range(nums)]
+    colors = list(map(lambda x: colorsys.hsv_to_rgb(*x), hsv_tuples))
+    colors = list(map(lambda x: (int(x[0] * 255), int(x[1] * 255), int(x[2] * 255)), colors))
+    return colors
+
 

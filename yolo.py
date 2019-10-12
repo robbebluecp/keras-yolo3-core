@@ -146,7 +146,6 @@ def yolo_loss(args, anchors, num_classes):
         grid, raw_pred, pred_xy, pred_wh = yolo_core(y_pred_base[l],
                                                      anchors[config.anchor_mask[l]],
                                                      num_classes,
-                                                     input_shape,
                                                      calc_loss=True)
         # (N, 13, 13, 3, 4)
         pred_box = K.concatenate([pred_xy, pred_wh])
@@ -212,7 +211,7 @@ def yolo_loss(args, anchors, num_classes):
         loss += xy_loss + wh_loss + confidence_loss + class_loss
     return loss
 
-def yolo_core(feats, anchors, num_classes, input_shape, calc_loss=False):
+def yolo_core(feats, anchors, num_classes, calc_loss=False):
     """
 
     :param feats:           (N, 13, 13, 3 * (5+n_class)), ...
@@ -222,6 +221,7 @@ def yolo_core(feats, anchors, num_classes, input_shape, calc_loss=False):
     :param calc_loss:
     :return:
     """
+    input_shape = config.image_input_shape
     # 3
     num_anchors = len(anchors)
     # Reshape to batch, height, width, num_anchors, box_params.
