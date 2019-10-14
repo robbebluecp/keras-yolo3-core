@@ -1,3 +1,7 @@
+"""
+预测模块
+"""
+
 from tools import utils_text, utils_image
 import config
 from keras.models import load_model
@@ -6,7 +10,7 @@ import numpy as np
 import keras.backend as K
 import eval
 
-model_file_path = '/Users/yvan/stayby/keras-yolo3-core/model_data/yolo.h5'
+model_file_path = '/Users/yvan/stayby/keras-yolo3-core/model_data/model_yolo.h5'
 image_file_path = '/Users/yvan/stayby/keras-yolo3/data/VOCdevkit/VOC2007/JPEGImages/000001.jpg'
 
 
@@ -30,6 +34,7 @@ new_image = np.array(new_image, dtype='float32')
 new_image /= 255.
 new_image = np.expand_dims(new_image, 0)  # Add batch dimension.
 feats = model.predict(new_image)
+
 boxes, scores, classes = eval.yolo_eval(feats, anchors, len(class_names), (image.size[1], image.size[0]))
 
 out_boxes, out_scores, out_classes = ss.run(boxes), ss.run(scores), ss.run(classes)
@@ -48,7 +53,6 @@ for i, c in reversed(list(enumerate(out_classes))):
     left = max(0, np.floor(left + 0.5).astype('int32'))
     bottom = min(image.size[1], np.floor(bottom + 0.5).astype('int32'))
     right = min(image.size[0], np.floor(right + 0.5).astype('int32'))
-    print(label, (left, top), (right, bottom))
 
     if top - label_size[1] >= 0:
         text_origin = np.array([left, top - label_size[1]])

@@ -1,3 +1,7 @@
+"""
+图像处理模块
+"""
+
 from .utils import rand
 from PIL import Image
 import numpy as np

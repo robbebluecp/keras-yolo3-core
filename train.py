@@ -1,3 +1,7 @@
+"""
+训练模块
+"""
+
 from tools import utils_text
 import config
 import yolo
@@ -21,6 +25,7 @@ train_lines = label_lines[:int(len(label_lines) * config.validation_split)]
 valid_lines = label_lines[int(len(label_lines) * config.validation_split):]
 
 model_yolo = yolo.DarkNet()(n_class=num_classes, n_anchor=num_anchors)
+model_yolo.summary()
 
 h, w = config.image_input_shape
 y_true = [Input(shape=(h // config.scale_size[l], w // config.scale_size[l], num_anchors // 3, num_classes + 5)) for l in range(3)]
@@ -44,3 +49,4 @@ model.fit_generator(generator=data_generator(label_lines=train_lines,
                     validation_steps=int(len(label_lines) * config.validation_split),
                     epochs=config.epochs
                     )
+model_yolo.save('/Users/yvan/stayby/keras-yolo3-core/model_data/model_yolo.h5')

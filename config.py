@@ -1,9 +1,11 @@
-
+"""
+config
+"""
 
 # anchor 文件路径
 anchor_file_path = '/Users/yvan/stayby/keras-yolo3-core/model_data/anchors.txt'
 # class文件路径
-class_file_path = '/Users/yvan/stayby/keras-yolo3-core/model_data/classes.txt'
+class_file_path = '/Users/yvan/stayby/keras-yolo3-core/model_data/voc_classes.txt'
 # 样本数据文件路径
 label_file_path = '/Users/yvan/stayby/keras-yolo3-core/sample_data/train.txt'
 # 样式路径

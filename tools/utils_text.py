@@ -1,3 +1,7 @@
+"""
+文本处理模块
+"""
+
 import numpy as np
 
 

@@ -1,3 +1,11 @@
+"""
+yolo核心模块
+1、DarkNet:      darknet网络模型
+2、yolo_loss:    yolo损失函数
+3、yolo_core:    yolo模型一个用用模块，用于对网络输出做放缩处理
+
+"""
+
 from keras.layers import *
 import keras
 from keras.regularizers import *
