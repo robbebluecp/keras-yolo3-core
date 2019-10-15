@@ -1,7 +1,8 @@
 """
 预测模块
 """
-
+import yolo
+from keras.utils import plot_model
 from tools import utils_text, utils_image
 import config
 from keras.models import load_model
@@ -10,17 +11,19 @@ import numpy as np
 import keras.backend as K
 import eval
 
-model_file_path = '/Users/yvan/stayby/keras-yolo3-core/model_data/model_yolo.h5'
+model_file_path = '/Users/yvan/stayby/keras-yolo3-core/model_data/model_yolo_official.h5'
 image_file_path = '/Users/yvan/stayby/keras-yolo3/data/VOCdevkit/VOC2007/JPEGImages/000001.jpg'
 
 
 anchors = utils_text.get_anchors(config.anchor_file_path)
-class_names = utils_text.get_classes(config.class_file_path)
+class_names = utils_text.get_classes('/Users/yvan/stayby/keras-yolo3-core/model_data/coco_classes.txt')
 num_anchors = len(anchors)
 num_classes = len(class_names)
 class_mapping = dict(enumerate(class_names))
 class_mapping = {class_mapping[key]: key for key in class_mapping}
 model = load_model(model_file_path)
+
+
 image = Image.open(image_file_path)
 font = ImageFont.truetype(font=config.font_path, size=np.floor(3e-2 * image.size[1] + 0.5).astype('int32'))
 thickness = (image.size[0] + image.size[1]) // 300

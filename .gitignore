@@ -4,3 +4,4 @@
 *.xml
 model_data/yolo.h5
 *.h5
+*.weights
