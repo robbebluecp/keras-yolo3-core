@@ -18,7 +18,7 @@ num_classes = len(class_names)
 class_mapping = dict(enumerate(class_names))
 class_mapping = {class_mapping[key]: key for key in class_mapping}
 
-f = open(config.label_file_path)
+f = open('/Users/yvan/stayby/keras-yolo3-core/sample_data/train_tmp.txt')
 label_lines = f.readlines()
 
 train_lines = label_lines[:int(len(label_lines) * config.validation_split)]

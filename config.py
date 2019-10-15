@@ -27,4 +27,4 @@ ignore_thresh = 0.5
 
 batch_size = 8
 validation_split = 0.1
-epochs = 50
+epochs = 3
