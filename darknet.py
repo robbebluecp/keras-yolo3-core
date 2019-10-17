@@ -12,7 +12,7 @@ class GenerateConfig:
 
     def __init__(self,
                  darknet_root: str,
-                 data_root: str,
+                 data_train_root: str,
                  batch: int = 64,
                  subdivisions: int = 8,
                  max_batches: int = 10000
@@ -29,23 +29,24 @@ class GenerateConfig:
 
         """
         self.darknet_root = os.path.abspath(darknet_root)
-        self.data_root = os.path.abspath(data_root)
+        self.data_train_root = os.path.abspath(data_train_root)
+        self.data_test_root = self.data_train_root.replace('train', 'test')
         self.batch = batch
         self.subdivisions = subdivisions
         self.max_batches = max_batches
 
     def run(self):
         # 生成类.name文件（类别文件）
-        shutil.copy(self.data_root + '/' + 'class.txt', self.darknet_root + '/data/class.txt')
+        shutil.copy(self.data_train_root + '/' + 'class.txt', self.darknet_root + '/data/class.txt')
         # 修改配置文件
-        f = open(self.data_root + '/' + 'class.txt')
+        f = open(self.data_train_root + '/' + 'class.txt')
         class_num = len(f.readlines())
         f.close()
         with open(self.darknet_root + '/cfg/' + 'yolov3-voc.cfg', 'r') as f:
             text = f.read()
             f.close()
         text = text.replace('classes=20', 'classes=%s' % class_num)
-        text = text.replace('filters=75', 'filters=%s' % (int(class_num) + 5) * 3)
+        text = text.replace('filters=75', 'filters=%s' % ((int(class_num) + 5) * 3))
         text = text.replace('batch=1', 'batch=%s' % self.batch)
         text = text.replace('subdivisions=1', 'subdivisions=%s' % self.subdivisions)
         text = text.replace('max_batches = 50200', 'max_batches = %s', self.max_batches)
@@ -53,12 +54,22 @@ class GenerateConfig:
             f.write(text)
             f.close()
 
-        with open(self.darknet_root + '/cfg/' + 'voc.data', 'r') as f:
-            text = f.read()
-            f.close()
-        text = text.replace()
+        train_meta_str = ''
+        train_meta_str += 'classes=%s\n' % class_num
+        train_meta_str += 'train=%s/train.txt\n' % self.data_train_root
+        train_meta_str += 'valid=%s/test.txt\n' % self.data_test_root
+        train_meta_str += 'names=%s\n' % 'data/class.txt'
+        train_meta_str += 'backup'
+        """
+        classes= 20
+        train  = /home/pjreddie/data/voc/train.txt
+        valid  = /home/pjreddie/data/voc/2007_test.txt
+        names = data/voc.names
+        backup = backup
+        """
+
         with open(self.darknet_root + '/cfg/' + 'train_meta.cfg', 'w') as f:
-            f.write(text)
+            f.write(train_meta_str)
             f.close()
 
     def __call__(self, *args, **kwargs):
@@ -289,5 +300,5 @@ class Convert:
 
 if __name__ == "__main__":
     GenerateConfig('/Users/yvan/darknet/darknet', '/Users/yvan/data/voc2007').run()
-    Convert('/Users/yvan/stayby/keras-yolo3-core/model_data/yolov3.cfg', '/Users/yvan/stayby/keras-yolo3-core/model_data/yolov3.weights',
-            '/Users/yvan/stayby/keras-yolo3-core/model_data/yolov3.h5').run()
+    # Convert('/Users/yvan/stayby/keras-yolo3-core/model_data/yolov3.cfg', '/Users/yvan/stayby/keras-yolo3-core/model_data/yolov3.weights',
+    #         '/Users/yvan/stayby/keras-yolo3-core/model_data/yolov3.h5').run()
