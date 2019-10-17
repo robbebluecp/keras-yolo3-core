@@ -49,7 +49,7 @@ class GenerateConfig:
         text = text.replace('filters=75', 'filters=%s' % ((int(class_num) + 5) * 3))
         text = text.replace('batch=1', 'batch=%s' % self.batch)
         text = text.replace('subdivisions=1', 'subdivisions=%s' % self.subdivisions)
-        text = text.replace('max_batches = 50200', 'max_batches = %s', self.max_batches)
+        text = text.replace('max_batches = 50200', 'max_batches = %s' % self.max_batches)
         with open(self.darknet_root + '/cfg/' + 'train_net.cfg', 'w') as f:
             f.write(text)
             f.close()
