@@ -12,11 +12,11 @@ import keras.backend as K
 import eval
 
 model_file_path = '/Users/yvan/stayby/keras-yolo3-core/model_data/model_yolo.h5'
-image_file_path = '/Users/yvan/stayby/keras-yolo3/data/VOCdevkit/VOC2007/JPEGImages/000004.jpg'
-
+image_file_path = '/Users/yvan/stayby/keras-yolo3/data/VOCdevkit/VOC2007/JPEGImages/000001.jpg'
+class_file_path = '/Users/yvan/stayby/keras-yolo3-core/model_data/voc_classes.txt'
 
 anchors = utils_text.get_anchors(config.anchor_file_path)
-class_names = utils_text.get_classes('/Users/yvan/stayby/keras-yolo3-core/model_data/voc_classes.txt')
+class_names = utils_text.get_classes(class_file_path)
 num_anchors = len(anchors)
 num_classes = len(class_names)
 class_mapping = dict(enumerate(class_names))
