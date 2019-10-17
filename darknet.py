@@ -59,7 +59,7 @@ class GenerateConfig:
         train_meta_str += 'train=%s/train.txt\n' % self.data_train_root
         train_meta_str += 'valid=%s/test.txt\n' % self.data_test_root
         train_meta_str += 'names=%s\n' % 'data/class.txt'
-        train_meta_str += 'backup'
+        train_meta_str += 'backup=backup'
         """
         classes= 20
         train  = /home/pjreddie/data/voc/train.txt
