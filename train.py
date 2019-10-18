@@ -1,5 +1,6 @@
 """
 训练模块
+不可用！！！
 """
 
 from tools import utils_text

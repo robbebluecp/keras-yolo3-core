@@ -6,6 +6,8 @@ import io
 import configparser
 from keras.regularizers import l2
 from keras.models import Model
+import numpy as np
+import keras.backend as K
 
 
 class GenerateConfig:

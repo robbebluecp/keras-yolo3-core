@@ -1,8 +1,7 @@
 """
 预测模块
 """
-import yolo
-from keras.utils import plot_model
+
 from tools import utils_text, utils_image
 import config
 from keras.models import load_model
