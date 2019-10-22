@@ -17,7 +17,7 @@ from tools import utils
 
 
 class DarkNet:
-    def conv_base_block(self, inputs, filters, kernel_size, strides=(1, 1)):
+    def conv_base_block(self, inputs, filters, kernel_size, strides=(1, 1), use_bias=False):
         """
         darknet 自定义 conv层
         """
@@ -25,7 +25,7 @@ class DarkNet:
             padding = 'valid'
         else:
             padding = 'same'
-        x = Conv2D(filters=filters, kernel_size=kernel_size, strides=strides, padding=padding, use_bias=False, kernel_regularizer=l2(5e-4))(inputs)
+        x = Conv2D(filters=filters, kernel_size=kernel_size, strides=strides, padding=padding, use_bias=use_bias, kernel_regularizer=l2(5e-4))(inputs)
         return x
 
     def conv_block(self, inputs, filters, kernel_size, strides=(1, 1)):
@@ -56,11 +56,11 @@ class DarkNet:
         x = self.conv_block(inputs=inputs, filters=filters, kernel_size=1)
         x = self.conv_block(inputs=x, filters=filters * 2, kernel_size=3)
         x = self.conv_block(inputs=x, filters=filters, kernel_size=1)
-        x = self.conv_block(inputs=x, filters=filters * 2, kernel_size=2)
+        x = self.conv_block(inputs=x, filters=filters * 2, kernel_size=3)
         x = self.conv_block(inputs=x, filters=filters, kernel_size=1)
 
         y = self.conv_block(inputs=x, filters=filters * 2, kernel_size=3)
-        y = self.conv_base_block(inputs=y, filters=output_filters, kernel_size=1)
+        y = self.conv_base_block(inputs=y, filters=output_filters, kernel_size=1, use_bias=True)
         return x, y
 
     def get_darknet(self,
@@ -100,7 +100,6 @@ class DarkNet:
                  n_anchor: int,
                  *args, **kwargs):
         return self.get_darknet(n_class, n_anchor)
-
 
 
 def yolo_loss(args, anchors, num_classes):
@@ -219,7 +218,8 @@ def yolo_loss(args, anchors, num_classes):
         loss += xy_loss + wh_loss + confidence_loss + class_loss
     return loss
 
-def yolo_core(feats, anchors, num_classes, calc_loss=False):
+
+def yolo_core(feats, anchors, num_classes, input_shape, calc_loss=False):
     """
 
     :param feats:           (N, 13, 13, 3 * (5+n_class)), ...
@@ -229,7 +229,6 @@ def yolo_core(feats, anchors, num_classes, calc_loss=False):
     :param calc_loss:
     :return:
     """
-    input_shape = config.image_input_shape
     # 3
     num_anchors = len(anchors)
     # Reshape to batch, height, width, num_anchors, box_params.
