@@ -3,9 +3,9 @@ config
 """
 
 # anchor 文件路径
-anchor_file_path = 'anchors.txt'
+anchor_file_path = 'model_data/anchors.txt'
 # class文件路径
-class_file_path = 'model_data/voc_classes.txt'
+class_file_path = 'model_data/coco_classes.txt'
 # 样本数据文件路径
 label_file_path = 'sample_data/train.txt'
 # 样式路径

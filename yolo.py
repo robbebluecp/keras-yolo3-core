@@ -132,7 +132,7 @@ def yolo_loss(args, anchors, num_classes):
     # (9, 2)
     anchors = np.asarray(anchors, dtype=int)
     # (416, 416)
-    input_shape = K.cast(config.image_input_shape, K.floatx())
+    input_shape = K.cast(K.shape(y_pred_base[0])[1:3] * 32, K.dtype(y_true[0]))
     # [(13, 13), (26, 26), (52, 52)]
     grid_shapes = [K.cast(K.shape(y_pred_base[l])[1:3], K.floatx()) for l in range(num_layers)]
     loss = 0
@@ -153,6 +153,7 @@ def yolo_loss(args, anchors, num_classes):
         grid, raw_pred, pred_xy, pred_wh = yolo_core(y_pred_base[l],
                                                      anchors[config.anchor_mask[l]],
                                                      num_classes,
+                                                     input_shape,
                                                      calc_loss=True)
         # (N, 13, 13, 3, 4)
         pred_box = K.concatenate([pred_xy, pred_wh])

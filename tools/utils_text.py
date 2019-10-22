@@ -5,7 +5,7 @@
 import numpy as np
 
 
-def get_anchors(anchor_path='../model_data/anchors.txt'):
+def get_anchors(anchor_path='model_data/anchors.txt'):
     """
 
     :param anchor_path:     存放anchor的文件路径
