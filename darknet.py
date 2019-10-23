@@ -301,6 +301,6 @@ class Convert:
         return self.run()
 
 if __name__ == "__main__":
-    GenerateConfig('/Users/yvan/darknet/darknet', '/Users/yvan/data/voc2007').run()
-    # Convert('/Users/yvan/stayby/keras-yolo3-core/model_data/yolov3.cfg', '/Users/yvan/stayby/keras-yolo3-core/model_data/yolov3.weights',
-    #         '/Users/yvan/stayby/keras-yolo3-core/model_data/yolov3.h5').run()
+    # GenerateConfig('/Users/yvan/darknet/darknet', '/Users/yvan/data/voc2007').run()
+    Convert('/Users/yvan/stayby/keras-yolo3-core/model_data/train_net.cfg', '/Users/yvan/stayby/keras-yolo3-core/model_data/train_net_final.weights',
+            '/Users/yvan/stayby/keras-yolo3-core/model_data/train.h5').run()

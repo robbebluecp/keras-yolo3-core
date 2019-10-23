@@ -10,9 +10,9 @@ import numpy as np
 import keras.backend as K
 import eval
 
-model_file_path = '/Users/yvan/stayby/keras-yolo3-core/model_data/yolo.h5'
-image_file_path = '/Users/yvan/data/voc2007/images/000001.jpg'
-class_file_path = '/Users/yvan/stayby/keras-yolo3-core/model_data/coco_classes.txt'
+model_file_path = '/Users/yvan/stayby/keras-yolo3-core/model_data/train.h5'
+image_file_path = 'tmp.png'
+class_file_path = '/Users/yvan/stayby/keras-yolo3-core/model_data/voc_classes.txt'
 
 anchors = utils_text.get_anchors(config.anchor_file_path)
 class_names = utils_text.get_classes(class_file_path)

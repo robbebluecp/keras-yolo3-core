@@ -6,3 +6,4 @@ model_data/yolo.h5
 *.h5
 *.weights
 model_data/anchor_kmeans.txt
+model_data/train_net.cfg
